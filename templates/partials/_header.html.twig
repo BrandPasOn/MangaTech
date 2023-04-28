@@ -23,8 +23,10 @@
 			{% endif %}
 
 			{% if app.user %}
-				<a href="/profile" class="text-sm font-semibold leading-6 text-gray-900">Profile</a>
+				<a href="/profil/{{ app.user.getId() }}" class="text-sm font-semibold leading-6 text-gray-900">Profil</a>
 			{% endif %}
+
+			<a href="/subscriptions" class="text-sm font-semibold leading-6 text-gray-900">Abonnements</a>
 
 
 		</div>

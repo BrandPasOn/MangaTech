@@ -1,20 +1,60 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}MangaTech{% endblock %}
+{% block title %}MangaTech | Page d'acceuil{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+{% for message in app.flashes('subscribSuccess') %}
+	<div class="rounded-md bg-green-50 p-4">
+		<div class="flex">
+			<div class="flex-shrink-0">
+				<svg class="h-5 w-5 text-green-400" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
+					<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd"/>
+				</svg>
+			</div>
+			<div class="ml-3">
+				<p class="text-sm font-medium text-green-800">{{ message }}</p>
+			</div>
+			<div class="ml-auto pl-3">
+				<div class="-mx-1.5 -my-1.5">
+					<button type="button" class="inline-flex rounded-md bg-green-50 p-1.5 text-green-500 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 focus:ring-offset-green-50">
+						<span class="sr-only">Dismiss</span>
+						<svg class="h-5 w-5" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
+							<path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z"/>
+						</svg>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endfor %}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<div class="bg-white">
+	<div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+		<h2 id="products-heading" class="sr-only">Products</h2>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/admin/Desktop/Brandon/DEV/3wa/www/symphony/mangatech/src/Controller/HomeController.php'|file_link(0) }}">src/Controller/HomeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/admin/Desktop/Brandon/DEV/3wa/www/symphony/mangatech/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
-    </ul>
+		<div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
+
+        {% for serie in series %}
+		{% if serie.getMangas()|first %}
+			{% set imageUrl = serie.getMangas()|sort((a, b) => a.volumeNumber <=> b.volumeNumber)|first.getImage().url %}
+			{% set imageAlt = serie.getMangas()|sort((a, b) => a.volumeNumber <=> b.volumeNumber)|first.getImage().alt %}
+		{% endif %}
+
+
+			<a href="/serie/{{ serie.id }}" class="group">
+				<div class="aspect-h-1 aspect-w-1 w-full h-[563px] overflow-hidden rounded-lg sm:aspect-h-3 sm:aspect-w-2">
+					<img src="{{ serie.getMangas()|first ? asset(imageUrl) : asset("/assets/images/no_visual.png") }}" alt="{{ serie.getMangas()|first ? imageAlt : "Pas d'image disponnible pour cette série" }}" class="h-full w-full object-cover object-center group-hover:opacity-75">
+				</div>
+				<div class="mt-4 flex items-center justify-between text-base font-medium text-gray-900">
+					<h3>{{ serie.name }}</h3>
+					<p></p>
+				</div>
+				<p class="mt-1 text-sm italic text-gray-500">{{ serie.getMangas()|length }} tomes disponnible</p>
+
+			</a>
+        {% endfor %}
+		</div>
+	</div>
 </div>
+
 {% endblock %}

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Manga;
+use App\Entity\Serie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -39,20 +40,25 @@ class MangaRepository extends ServiceEntityRepository
         }
     }
 
+    public function findBySerie(Serie $serie): array
+    {
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.serie = :serie')
+            ->orderBy('m.volume_number', 'ASC')
+            ->setParameter('serie', $serie)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findAllOrderBy(string $param, string $order)
+    {
+        return $this->findBy(array(), array($param => $order));
+    }
+
 //    /**
 //     * @return Manga[] Returns an array of Manga objects
 //     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('m')
-//            ->andWhere('m.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('m.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
 
 //    public function findOneBySomeField($value): ?Manga
 //    {

@@ -39,6 +39,21 @@ class BorrowingRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @return Borrowing[] Returns an array of Borrowing objects
+     * Where isReturned is false
+     */
+    public function findByNotReturned($user): array
+    {
+        return $this->createQueryBuilder('b')
+            ->select('b.is_returned')
+            ->andWhere('b.is_returned = false')
+            ->andWhere('b.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Borrowing[] Returns an array of Borrowing objects
 //     */

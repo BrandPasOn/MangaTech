@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\SerieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SerieRepository::class)]
@@ -28,7 +29,7 @@ class Serie
     private ?\DateTimeImmutable $created_at = null;
 
     #[ORM\OneToMany(mappedBy: 'serie', targetEntity: Manga::class, orphanRemoval: true)]
-    private ArrayCollection $mangas;
+    private Collection $mangas;
 
     public function __construct()
     {
@@ -89,9 +90,9 @@ class Serie
     }
 
     /**
-     * @return ArrayCollection<int, Manga>
+     * @return Collection<int, Manga>
      */
-    public function getMangas(): ArrayCollection
+    public function getMangas(): Collection
     {
         return $this->mangas;
     }

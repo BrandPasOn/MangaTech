@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\SubscriptionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -25,7 +26,7 @@ class Subscription
     private ?float $monthly_price = null;
 
     #[ORM\OneToMany(mappedBy: 'subscription', targetEntity: User::class)]
-    private ArrayCollection $users;
+    private Collection $users;
 
     public function __construct()
     {
@@ -74,9 +75,9 @@ class Subscription
     }
 
     /**
-     * @return ArrayCollection<int, User>
+     * @return Collection<int, User>
      */
-    public function getUsers(): ArrayCollection
+    public function getUsers(): Collection
     {
         return $this->users;
     }

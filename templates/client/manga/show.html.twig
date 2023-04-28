@@ -1,0 +1,126 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MangaTech | {{ manga.serie.name }} Tome {{ manga.volumeNumber }}
+{% endblock %}
+
+{% block body %}
+{% for message in app.flashes('success') %}
+	<div class="rounded-md bg-green-50 p-4">
+		<div class="flex">
+			<div class="flex-shrink-0">
+				<svg class="h-5 w-5 text-green-400" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
+					<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd"/>
+				</svg>
+			</div>
+			<div class="ml-3">
+				<p class="text-sm font-medium text-green-800">{{ message }}</p>
+			</div>
+			<div class="ml-auto pl-3">
+				<div class="-mx-1.5 -my-1.5">
+					<button type="button" class="inline-flex rounded-md bg-green-50 p-1.5 text-green-500 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 focus:ring-offset-green-50">
+						<span class="sr-only">Dismiss</span>
+						<svg class="h-5 w-5" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
+							<path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z"/>
+						</svg>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endfor %}
+{% for message in app.flashes('error') %}
+	<div class="rounded-md bg-red-50 p-4">
+		<div class="flex">
+			<div class="flex-shrink-0">
+				<svg class="h-5 w-5 text-red-400" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
+					<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd"/>
+				</svg>
+			</div>
+			<div class="ml-3">
+				<p class="text-sm font-medium text-red-800">{{ message }}</p>
+			</div>
+			<div class="ml-auto pl-3">
+				<div class="-mx-1.5 -my-1.5">
+					<button type="button" class="inline-flex rounded-md bg-red-50 p-1.5 text-red-500 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-red-50">
+						<span class="sr-only">Dismiss</span>
+						<svg class="h-5 w-5" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
+							<path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z"/>
+						</svg>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endfor %}
+
+	
+<div class="bg-white">
+	<div
+		class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl flex lg:gap-x-8 lg:px-8">
+		<!-- Product details -->
+		<div class="w-3/6">
+			<nav aria-label="Breadcrumb">
+				<ol role="list" class="flex items-center space-x-2">
+					<li>
+						<div class="flex items-center text-sm">
+							<a href="/serie/{{ manga.serie.id }}" class="font-medium text-gray-500 hover:text-gray-900">{{ manga.serie.name }}</a>
+							<svg viewbox="0 0 20 20" fill="currentColor" aria-hidden="true" class="ml-2 h-5 w-5 flex-shrink-0 text-gray-300">
+								<path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z"/>
+							</svg>
+						</div>
+					</li>
+					<li>
+						<div class="flex items-center text-sm">
+							<p href="" class="font-medium text-gray-500 hover:text-gray-900">Tome {{ manga.volumeNumber }}</p>
+						</div>
+					</li>
+				</ol>
+			</nav>
+
+			<div class="mt-4">
+				<h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">{{ manga.serie.name }} Tome {{ manga.volumeNumber }}</h1>
+                <h2 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-4xl">{{ manga.title ? manga.title : "" }}</h2>
+			</div>
+
+			<section aria-labelledby="information-heading" class="mt-4">
+				<h2 id="information-heading" class="sr-only">Product information</h2>
+
+				<div class="flex items-center">
+					<p class="text-lg text-gray-900 sm:text-xl">{{ manga.price|number_format(2) }} €</p>
+				</div>
+
+				<div class="mt-4 space-y-6">
+					<p class="text-base text-gray-500">{{ manga.summary }}</p>
+				</div>
+
+				<div class="mt-6 flex items-center">
+					<svg class="h-5 w-5 flex-shrink-0 text-green-500" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
+						<path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd"/>
+					</svg>
+					<p class="ml-2 text-sm text-gray-500">{{ manga.stock.quantity }} {{ manga.stock.quantity|length != 0 ? "exemplaires restant" : "exemplaire restant" }}</p>
+				</div>
+                
+                <!-- Product form -->
+                <div class="mt-10 lg:col-start-1 lg:row-start-2 lg:max-w-lg lg:self-start">
+                    <section aria-labelledby="options-heading">
+                        <h2 id="options-heading" class="sr-only">Product options</h2>
+
+                        {{ form(form) }}
+                    </section>
+                </div>
+			</section>
+		</div>
+
+		<!-- Product image -->
+		<div class="mt-10 lg:mt-0 lg:self-center mx-auto">
+			<div class="aspect-h-1 aspect-w-1 overflow-hidden rounded-lg">
+				<img src="{{ asset(manga.getImage().url) }}" alt="Model wearing light green backpack with black canvas straps and front zipper pouch." class="h-full w-full object-cover object-center">
+			</div>
+		</div>
+
+	</div>
+</div>
+
+
+{% endblock %}
+
